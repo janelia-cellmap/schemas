@@ -37,5 +37,7 @@ All array data should ultimately have the following attributes:
 
 `contrast_limits`: For data that have not been contrast-adjusted to fill an entire datatype range, the minimum and maximum data value should be computed once and saved as an attribute.
 
-
-
+## array dimensions
+Z: The milling axis
+Y: The axis normal to the coverslip
+X: The remaining axis
