@@ -29,13 +29,21 @@ In the future, we may wish to add other masks. Perhaps most useful would be a ma
 ### raw
 The `/raw` array does not actually contain raw data -- it contains aligned, binned, and inverted data, which can be used for making predictions from the machine learning model. In the future, the truly raw data (i.e., data as it was acquired from the FIBSEM microscope) will live in `/raw`.
 
+## group attributes
+
+`padding`: The amount of padding applied to the data. For some datasets padding is used to to compensate for inconsistent image sizes, and it is also used after image registration. The exact metadata representation of padding is to be determined.
+
 ## array attributes
 All array data should ultimately have the following attributes:
 `resolution`: e.g. `[4, 4, 4]` or `[z : 4, y : 4, x : 3]`. The pixel spacing of the data in real units, e.g. nanometers  
 
 `offset`: The position in real space of the origin of the array data. Parent data should always have the offset `[.5, .5, .5]`, (the center coordinate of a single pixel in 3D), and all ROI taken from from the parent data will have an offset relative to `[.5, .5, .5]`  
 
-`contrast_limits`: For data that have not been contrast-adjusted to fill an entire datatype range, the minimum and maximum data value should be computed once and saved as an attribute.
+`contrastLimits`: For data that have not been contrast-adjusted to fill an entire datatype range, the minimum and maximum data value should be computed once and saved as an attribute.
+
+`creationDate`: The time when the array was created.
+
+`program`: The name / identifier of the program that created the array.
 
 ## array dimensions
 Z: The milling axis
