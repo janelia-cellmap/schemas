@@ -17,7 +17,7 @@ There are a variety of ways to handle the metadata associated with image pyramid
 When storing image pyramids in hierarchical array storage formats (namely, HDF5, N5, Zarr), there are a variety of extant approaches for representing the pyramid and handling metadata. 
 
 
-deprecated n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit/4df02d4f9aadbfe4aa31fcded748fce57519a70c#diff-04c6e90faac2675aa89e2176d2eec7d8)) : scale levels must be datasets in the same group with names `s{N}`, where `N` is the scale level starting at `S0` (full resolution). 
+## deprecated n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit/4df02d4f9aadbfe4aa31fcded748fce57519a70c#diff-04c6e90faac2675aa89e2176d2eec7d8)) 
 ```
 └─ root (optional) {resolution : [rx, ry, rz]} 
         (optional) {pixelResolution: {dimensions: [rx, ry, rz], unit: 'm'},
@@ -26,8 +26,9 @@ deprecated n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/co
     ├── (required) s1 (optional, unless "scales" is not a group level attribute): {"downsamplingFactors": [a,b,c]})
     ...
 ```
+Scale levels must be datasets in the same group with names `s{N}`, where `N` is the scale level starting at `s0` (full resolution). 
 
-modern n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit/36e75fd88ebcbc88a64da9fb082a28f9b46ded21#diff-04c6e90faac2675aa89e2176d2eec7d8)): scale levels must be datasets in the same group with names `s{N}`, where `N` is the scale level starting at `S0` (full resolution). 
+### modern n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit/36e75fd88ebcbc88a64da9fb082a28f9b46ded21#diff-04c6e90faac2675aa89e2176d2eec7d8))
 ```
 └─ root (optional) {resolution : [rx, ry, rz]}  
         (optional) {pixelResolution: {dimensions: [rx, ry, rz], unit: 'm'}}
@@ -35,10 +36,9 @@ modern n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit
     ├── (required) s1 (required) {"downsamplingFactors": [a,b,c]}
     ...
 ```
+Like the deprecated `n5-viewer` style, scale levels must be datasets in the same group with names `s{N}`, where `N` is the scale level starting at `s0` (full resolution). Both `n5-viewer` styles explicitly store the base resolution in one group-level attribute, and infer the resolution for different scale levels by combining that base resolution with the dataset-level `downsamplingFactors` attribute. This allows changing the resolution of all pyramid levels by adjusting a single attribute. However, the lack of `resolution` and `offset` attributes for the scale level datasets means they cannot be viewed in world coordinates outside the context of the entire pyramid group. Additonally, this approach "overloads" dataset names, and this approach silently assumes a specific form of downsampling that applies an increasing coordinate offset to each scale level.
 
-These approaches explicitly store the base resolution in one group-level attribute, and infer the resolution for different scale levels by combining that base resolution with the dataset-level `downsamplingFactors` attribute. This allows changing the resolution of all pyramid levels by adjusting a single attribute. However, the lack of `resolution` and `offset` attributes for the scale level datasets means they cannot be viewed in world coordinates outside the context of the entire pyramid group. Additonally, this approach "overloads" dataset names, and this approach silently assumes a specific form of downsampling that applies an increasing coordinate offset to each scale level.
-
-New proposed COSEM style: 
+### New proposed COSEM style: 
 ```
 └─ root (optional) {resolution: {rx, ry, rz}} 
         (optional) {offset: {ox, oy, oz}} 
