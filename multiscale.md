@@ -36,7 +36,10 @@ Scale levels must be datasets in the same group with names `s{N}`, where `N` is 
     ├── (required) s1 (required) {"downsamplingFactors": [a,b,c]}
     ...
 ```
-Like the deprecated `n5-viewer` style, scale levels must be datasets in the same group with names `s{N}`, where `N` is the scale level starting at `s0` (full resolution). Both `n5-viewer` styles explicitly store the base resolution in one group-level attribute, and infer the resolution for different scale levels by combining that base resolution with the dataset-level `downsamplingFactors` attribute. This allows changing the resolution of all pyramid levels by adjusting a single attribute. However, the lack of `resolution` and `offset` attributes for the scale level datasets means they cannot be viewed in world coordinates outside the context of the entire pyramid group. Additonally, this approach "overloads" dataset names, and this approach silently assumes a specific form of downsampling that applies an increasing coordinate offset to each scale level.
+* Like the deprecated `n5-viewer` style, scale levels must be datasets in the same group with names `s{N}`, where `N` is the scale level starting at `s0` (full resolution). 
+* Both `n5-viewer` styles explicitly store the base resolution in one group-level attribute, and infer the resolution for different scale levels by combining that base resolution with the dataset-level `downsamplingFactors` attribute. This allows changing the resolution of all pyramid levels by adjusting a single attribute.
+* The lack of `resolution` and `offset` attributes for the scale level datasets means they cannot be viewed in world coordinates outside the context of the entire pyramid group. 
+* The offset for each scale level are not specified. This approach silently assumes a specific form of downsampling that applies an increasing coordinate offset to each scale level.
 
 ### New proposed COSEM style: 
 ```
@@ -47,6 +50,10 @@ Like the deprecated `n5-viewer` style, scale levels must be datasets in the same
     ├── bar (required) {resolution: {a * rx, b * ry, c * rz}, offset: offset_func({ox, oy, oz})}
     ...
 (offset_func depends on the type of downsampling used)
-(a, b, and c are numeric real numbers >= to 1.0)
+(a, b, and c are numeric real numbers >= 1.0)
+(personally I like "multiscale" more than "pyramid", but the actual keyword isn't important)
 ```
-No required scale level names. The pyramid is specified in the group attributes as a mapping between dataset names and dataset attributes. This allows mixing pyramid and non-pyramid datasets in the same group. Attributes of scale level datasets are generic self-describing dataset attributes like `resolution` and `offset`, which means these datasets can be viewed in real space without the group-level attributes. Root attributes include `resolution` and `offset`, which can be used to transform the dataset attributes with the same name. This allows rapidly rescaling the resolution of all scale levels, similar to the functionality of combination of group-level resolution attributes with the dataset-level `downsamplingFactors` attribute in the n5-viewer styles. Pyramids could also be defined this way using an affine transformation matrix instead of separate `resolution` and `offset` attributes for each dataset.
+* This scheme avoids specifying scale levels with pre-determined dataset names. Instead, the pyramid is specified in the group attributes as a mapping between dataset names and dataset attributes. This allows mixing pyramid and non-pyramid datasets in the same group, or potentially specifying pyramids that span multiple groups. 
+* The attributes of scale level datasets are generic self-describing dataset attributes like `resolution` and `offset`, which means these datasets can be viewed in real space without the group-level attributes. 
+* Root attributes include `resolution` and `offset`, which can be used to transform the dataset attributes with the same name. This allows rapidly rescaling the resolution of all scale levels, similar to the functionality of combination of group-level resolution attributes with the dataset-level `downsamplingFactors` attribute in the n5-viewer styles. Pyramids could also be defined this way using an affine transformation matrix instead of separate `resolution` and `offset` attributes for each dataset. 
+* A major downside to this scheme is that the `multiscale` group-level attribute is relatively complex, and cannot be natively represented as an `HDF5` attribute; instead, such an attribute must be written & read as a string and then parsed as JSON by consuming programs. 
