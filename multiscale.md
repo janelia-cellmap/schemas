@@ -19,9 +19,9 @@ When storing image pyramids in hierarchical array storage formats (namely, HDF5,
 
 ## deprecated n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit/4df02d4f9aadbfe4aa31fcded748fce57519a70c#diff-04c6e90faac2675aa89e2176d2eec7d8)) 
 ```
-└─ root (optional) {resolution : [r_x, r_y, r_z]} 
-        (optional) {pixelResolution: {dimensions: [r_x, r_y, r_z], unit: 'm'},
-        (optional) {scales : [[a, b ,c], [i*a, j*b, k*c], ... ]}
+└─ root (optional) {"resolution" : [r_x, r_y, r_z]} 
+        (optional) {"pixelResolution": {"dimensions": [r_x, r_y, r_z], "unit": 'm'},
+        (optional) {"scales" : [[a, b ,c], [i*a, j*b, k*c], ... ]}
     ├── (required) s0 {} 
     ├── (required) s1 (optional, unless "scales" is not a group level attribute): {"downsamplingFactors": [a, b, c]})
     ...
@@ -30,8 +30,8 @@ Scale levels must be datasets in the same group with names `s{N}`, where `N` is 
 
 ### modern n5-viewer style ([source](https://github.com/saalfeldlab/n5-viewer/commit/36e75fd88ebcbc88a64da9fb082a28f9b46ded21#diff-04c6e90faac2675aa89e2176d2eec7d8))
 ```
-└─ root (optional) {resolution : [r_x, r_y, r_z]}  
-        (optional) {pixelResolution: {dimensions: [r_x, r_y, r_z], unit: 'm'}}
+└─ root (optional) {"resolution" : [r_x, r_y, r_z]}  
+        (optional) {"pixelResolution": {"dimensions": [r_x, r_y, r_z], "unit": 'm'}}
     ├── (required) s0 {} 
     ├── (required) s1 (required) {"downsamplingFactors": [a, b, c]}
     ...
@@ -43,11 +43,11 @@ Scale levels must be datasets in the same group with names `s{N}`, where `N` is 
 
 ### New proposed COSEM style: 
 ```
-└─ root (optional) {resolution: [r_x, r_y, r_z]} 
-        (optional) {offset: [o_x, o_y, o_z]} 
-        (required) {multiscale: [{"foo" : [*foo.attributes]}, {"bar" : [*bar.attributes]}, ...]}
-    ├── foo (required) {resolution: [r_x, r_y, r_z], offset: [o_x, o_y, o_z]} 
-    ├── bar (required) {resolution: [a * r_x, b * r_y, c * r_z], offset: offset_func([o_x, o_y, o_z])}
+└─ root (optional) {"resolution": [r_x, r_y, r_z]} 
+        (optional) {"offset": [o_x, o_y, o_z]} 
+        (required) {"multiscale": [{"name": "foo",  [*foo.attributes]}, {"name" : "bar", [*bar.attributes]}, ...]}
+    ├── foo (required) {"resolution": [r_x, r_y, r_z], "offset": [o_x, o_y, o_z]} 
+    ├── bar (required) {"resolution": [a * r_x, b * r_y, c * r_z], "offset": offset_func([o_x, o_y, o_z])}
     ...
 (offset_func depends on the type of downsampling used)
 (a, b, and c are numeric real numbers >= 1.0)
