@@ -3,20 +3,20 @@
 ## Dataset spatial metadata
 
 Image datasets stored in n5 should contain a `transform` attribute, which stores 
-the transformation from pixel to physical coordinates as follows:
+the transformation from pixel to physical coordinates as a collection of C-ordered lists:
 
-```
+```json 
 "transform": {
-    "axes": [ "x", "y", "z" ],
+    "axes": [ "x", "y", "z" ], 
     "scale": [ <x-resolution>, <y-resolution> <z-resolution> ],
     "translate": [ <x-offset>, <y-offset>, <z-offset> ],
     "units": [ <x-units>, <y-units>, <z-units> ]
 }
 ```
 
-Optionally, datasets may contain n5-viewer style metadata for backward-compatibility. 
+Optionally, datasets may contain n5-viewer style metadata for backward-compatibility. Note that these dimensional values will be F-ordered.
 
-```
+```json
 "pixelResolution": {
     [ <x-resolution>, <y-resolution> <z-resolution> ],
     "unit": <spatial-units>
@@ -26,14 +26,12 @@ Optionally, datasets may contain n5-viewer style metadata for backward-compatibi
 
 ## Dataset visualization metadata
 
-Datasets contain additional metadata describing default display settings as follows:
+Visualization metadata for datasets is currently not stored directly in dataset metadata but rather in the `s3://<bucket-name>/<dataset name>/index.json` file. This is because we are storing some datasets in the neuroglancer precomputed format which does not explicitly allow storing arbitrary metadata, like visualization-related metadata. Each element of the visualization metadata obeys the following schema: 
 
-```
+```json
 "displaySettings": {
     "color": <string>,
-    "contrastMax": <double>,
-    "contrastMin": <double>,
-    "gamma": 1,
+    "contrastLimits": {"min": <double>, "max": <double>}
     "invertColormap": <true/false>
 }
 ```
@@ -61,7 +59,7 @@ Scales must be stored in a shared parent folder as separate n5 datasets with a n
 Parent folders containing a scale pyramid themselves will contain n5 attributes that describe all the scales
 they contain as follows:
 
-```
+```json
 "multiscales": [
     {
         "datasets" : [
