@@ -34,7 +34,7 @@ The `/raw` array does not actually contain raw data -- it contains aligned, binn
 `padding`: The amount of padding applied to the data. For some datasets padding is used to to compensate for inconsistent image sizes, and it is also used after image registration. The exact metadata representation of padding is to be determined, because some padding schemes are space-varying.
 
 ## array attributes
-All array data should ultimately have the following information stored in metadata:
+All array data should ultimately have the following information stored in metadata (although at present we do not completely cover all these cases):
 
 `name`: a name for the dataset.
 
@@ -44,7 +44,7 @@ All array data should ultimately have the following information stored in metada
 
 `scale`: The scaling factors required to map the indices of each axis to positions in real space. E.g., `[4, 4, 4]`
 
-`translate`: The position in real space of the origin of the array data, e.g. `[0.5, 0.5, 0.5]`. (Parent data should always have a `translate` value of `[.5, .5, .5]`, i.e. the coordinate of the center a voxel retrieved with the array index `[0, 0, 0]`, and all ROI taken from from the parent data will have some translation relative to that value.)  
+`translate`: The position in real space of the origin of the array data, e.g. `[0, 0, 0]`. 
 
 `contrastLimits`: For data that have not been contrast-adjusted to fill an entire datatype range, the minimum and maximum data value should be computed once and saved as an attribute.
 
