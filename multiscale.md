@@ -61,8 +61,8 @@ Scale levels must be datasets in the same group with names `s{N}`, where `N` is 
 ### Contemporary new proposed COSEM style (i.e. elaborated OME-ZARR spec)
 After a [discussion on github](https://github.com/zarr-developers/zarr-specs/issues/50) about group-level multiresolution metadata, we at COSEM have settled on using the OME-Zarr spec, which in our implementation looks like this:
 
-```
-[relevant group metadata]
+*Group metadata*:
+```json
 {
 "multiscales": [
         {
@@ -121,8 +121,9 @@ After a [discussion on github](https://github.com/zarr-developers/zarr-specs/iss
          }
     ]
 }
-
-[relevant dataset metadata for s0]
+```
+*Dataset metadata:*
+```json
 {
     "transform": {
         "axes": [
@@ -155,4 +156,4 @@ Notbale here is  the `transform` property, which appears in the dataset metadata
 
 This `transform` object does not support coordinate transformations like rotation and shear.
 
-N.B.: In practice, for COSEM datasets there may be other (redundant) elements of spatial metadata present in group and dataset attributes; This metadata is guranteed to agree with the aforedescribed `transform` metadata EXCEPT in the axis ordering, which may be F ordered (e.g. for metadata that will be consumed by Java-based tooling, or neuroglancer). The ambiguity here is unfortunate, and should be resolved with an unambiguous specification of axis ordering.
+N.B.: In practice, for COSEM datasets there may be other (redundant) elements of spatial metadata present in group and dataset attributes; The content of this metadata is guranteed to agree with the aforedescribed `transform` metadata EXCEPT in the axis ordering, which may be F ordered (e.g. for metadata that will be consumed by Java-based tooling, or neuroglancer). The ambiguity here is unfortunate, and should be resolved with an unambiguous specification of axis ordering.
