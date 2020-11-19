@@ -57,3 +57,102 @@ Scale levels must be datasets in the same group with names `s{N}`, where `N` is 
 * The attributes of scale level datasets are generic self-describing dataset attributes like `gridSpacing` and `origin`, which means these datasets can be viewed in real space without the group-level attributes. 
 * Root attributes include `gridSpacing` and `origin`, which can be used to transform the dataset attributes with the same name. This allows rapidly rescaling the resolution of all scale levels, similar to the functionality of combination of group-level resolution attributes with the dataset-level `downsamplingFactors` attribute in the n5-viewer styles. Pyramids could also be defined this way using a transformation matrix instead of separate `gridSpacing` and `origin` attributes for each dataset. 
 * A major downside to this scheme is that the `multiscale` group-level attribute is relatively complex, and cannot be natively represented as an `HDF5` attribute; instead, such an attribute must be written & read as a string and then parsed as JSON by consuming programs. 
+
+### Contemporary new proposed COSEM style (i.e. elaborated OME-ZARR spec)
+After a [discussion on github](https://github.com/zarr-developers/zarr-specs/issues/50) about group-level multiresolution metadata, we at COSEM have settled on using the OME-Zarr spec, which in our implementation looks like this:
+
+```
+[relevant group metadata]
+{
+"multiscales": [
+        {
+            "datasets": [
+                {
+                    "path": "s0",
+                    "transform": { # Implementation detail: these
+                        "axes": [  # axis values are all listed in C order. 
+                            "z",
+                            "y",
+                            "x"
+                        ],
+                        "scale": [
+                            5.24,
+                            4.0,
+                            4.0
+                        ],
+                        "translate": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "units": [
+                            "nm",
+                            "nm",
+                            "nm"
+                        ]
+                    }
+                },
+                {
+                    "path": "s1",
+                    "transform": {
+                        "axes": [
+                            "z",
+                            "y",
+                            "x"
+                        ],
+                        "scale": [
+                            10.48,
+                            8.0,
+                            8.0
+                        ],
+                        "translate": [
+                            2.62,
+                            2.0,
+                            2.0
+                        ],
+                        "units": [
+                            "nm",
+                            "nm",
+                            "nm"
+                        ]
+                    }
+                }
+             ]
+         }
+    ]
+}
+
+[relevant dataset metadata for s0]
+{
+    "transform": {
+        "axes": [
+            "z",
+            "y",
+            "x"
+        ],
+        "scale": [
+            5.24,
+            4.0,
+            4.0
+        ],
+        "translate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "units": [
+            "nm",
+            "nm",
+            "nm"
+        ]
+    }
+}
+```
+
+Notbale here is  the `transform` property, which appears in the dataset metadata and group metadata. This object conveys the following information:
+- The names and units of each array axis (in C order). 
+- How the array axes of the source dataset should be mapped into physical space through translation and scaling.
+
+This `transform` object does not support coordinate transformations like rotation and shear.
+
+N.B.: In practice, for COSEM datasets there may be other (redundant) elements of spatial metadata present in group and dataset attributes; This metadata is guranteed to agree with the aforedescribed `transform` metadata EXCEPT in the axis ordering, which may be F ordered (e.g. for metadata that will be consumed by Java-based tooling, or neuroglancer). The ambiguity here is unfortunate, and should be resolved with an unambiguous specification of axis ordering.
