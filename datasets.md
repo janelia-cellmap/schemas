@@ -31,13 +31,20 @@ The `/raw` array does not actually contain raw data -- it contains aligned, binn
 
 ## group attributes
 
-`padding`: The amount of padding applied to the data. For some datasets padding is used to to compensate for inconsistent image sizes, and it is also used after image registration. The exact metadata representation of padding is to be determined.
+`padding`: The amount of padding applied to the data. For some datasets padding is used to to compensate for inconsistent image sizes, and it is also used after image registration. The exact metadata representation of padding is to be determined, because some padding schemes are space-varying.
 
 ## array attributes
-All array data should ultimately have the following attributes:
-`resolution`: e.g. `[4, 4, 4]` or `[z : 4, y : 4, x : 3]`. The pixel spacing of the data in real units, e.g. nanometers  
+All array data should ultimately have the following information stored in metadata:
 
-`offset`: The position in real space of the origin of the array data. Parent data should always have the offset `[.5, .5, .5]`, (the center coordinate of a single pixel in 3D), and all ROI taken from from the parent data will have an offset relative to `[.5, .5, .5]`  
+`name`: a name for the dataset.
+
+`axes`: The names of the array axes of the data, e.g., `['z', 'y', 'x']`. 
+
+`units`: The units of the physical coordinates of the data, e.g. `['nm', 'nm', 'nm']`
+
+`scale`: The scaling factors required to map the indices of each axis to positions in real space. E.g., `[4, 4, 4]`
+
+`translate`: The position in real space of the origin of the array data, e.g. `[0.5, 0.5, 0.5]`. (Parent data should always have a `translate` value of `[.5, .5, .5]`, i.e. the coordinate of the center a voxel retrieved with the array index `[0, 0, 0]`, and all ROI taken from from the parent data will have some translation relative to that value.)  
 
 `contrastLimits`: For data that have not been contrast-adjusted to fill an entire datatype range, the minimum and maximum data value should be computed once and saved as an attribute.
 
@@ -45,7 +52,7 @@ All array data should ultimately have the following attributes:
 
 `program`: The name / identifier of the program that created the array.
 
-## array dimensions
-Z: The milling axis
-Y: The axis normal to the coverslip
-X: The remaining axis
+## physical interpretation of array dimensions
+z: the milling axis
+y: the slow axis of EM scanning
+x: the fast axis of EM scanning
