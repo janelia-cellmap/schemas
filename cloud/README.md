@@ -14,7 +14,7 @@ Each FIBSEM dataset is stored on [Amazon Web Services](https://aws.amazon.com/) 
 
 Most image volumes are stored in the chunked hierarchical array container format [N5](https://github.com/saalfeldlab/n5). Programmers can access to N5 containers through the following libraries: [n5](https://github.com/saalfeldlab/n5) (Java), [zarr](https://github.com/zarr-developers/zarr-python) (Python), [z5](https://github.com/constantinpape/z5) (C++, with python bindings available), and [rust-n5](https://github.com/aschampion/rust-n5) (Rust). Conventionally, all N5 containers begin with a directory suffixed with the string `.n5`, e.g. `jrc_hela-2.n5/`.
 
-A subset of the image volumes are stored with in the [Neuroglancer Precomputed](https://github.com/google/neuroglancer/blob/master/src/neuroglancer/datasource/precomputed/volume.md) format. These volumes can be accessed via [TensorStore](https://github.com/google/tensorstore) (C++/Python) and [CloudVolume](https://github.com/seung-lab/cloud-volume). Conventionally, all Neuroglancer Precomputed datasets are stored in a directory suffixed with the string `.precomputed`, e.g. `jrc_hela-2.precomputed/`.     
+A subset of the image volumes are stored with in the [Neuroglancer Precomputed](https://github.com/google/neuroglancer/blob/master/src/neuroglancer/datasource/precomputed/volume.md) format. These volumes can be accessed via [TensorStore](https://github.com/google/tensorstore) (C++/Python) and [CloudVolume](https://github.com/seung-lab/cloud-volume) (Python). Conventionally, all Neuroglancer Precomputed datasets are stored in a directory suffixed with the string `.precomputed`, e.g. `jrc_hela-2.precomputed/`.     
 
 ### Visualization 
 
