@@ -62,7 +62,7 @@ The following tree diagram illustrates how volumetric array data are organized w
 │  │   │   ├── <font color="#3465A4"><b>er_seg</b></font> <font color="#34a434"><b># endoplasmic reticulum segmentation </b></font>
 │  │   │   ├── <font color="#3465A4"><b>gt</b></font> <font color="#34a434"><b># Human-generated ground truth  </b></font>
 ┊  ┊   ┊   ┊
-│  │   └── <font color="#3465A4"><b>lm</b></font> <font color="#34a434"><b># Light microscopy data </b></font>
+│  │   └── <font color="#3465A4"><b>lm</b></font> <font color="#34a434"><b># light microscopy data </b></font>
 │  │      ├── <font color="#3465A4"><b>er_palm</b></font> <font color="#34a434"><b># PALM microscopy data of the endoplasmic reticulum </b></font>
 ┊  ┊      ┊
 ├── <font color="#3465A4"><b>neuroglancer</b></font> <font color="#34a434"><b># neuroglancer precomputed volumes</b></font>
