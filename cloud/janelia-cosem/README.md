@@ -58,8 +58,8 @@ The following tree diagram illustrates how volumetric array data are organized w
 │  │   │   ├── <font color="#3465A4"><b>fibsem-uint8</b></font> <font color="#34a434"><b># FIB-SEM data, uint8 datatype </b></font>
 ┊  ┊   ┊   ┊
 │  │   ├── <font color="#3465A4"><b>labels</b></font> <font color="#34a434"><b># raw predictions, refined segmentations, ground truth data </b></font>
-│  │   │   ├── <font color="#3465A4"><b>er_pred</b></font> <font color="#34a434"><b># endoplasmic reticulum predictions </b></font>
-│  │   │   ├── <font color="#3465A4"><b>er_seg</b></font> <font color="#34a434"><b># endoplasmic reticulum segmentation </b></font>
+│  │   │   ├── <font color="#3465A4"><b>er_pred</b></font> <font color="#34a434"><b># endoplasmic reticulum raw predictions </b></font>
+│  │   │   ├── <font color="#3465A4"><b>er_seg</b></font> <font color="#34a434"><b># endoplasmic reticulum refined segmentations </b></font>
 │  │   │   ├── <font color="#3465A4"><b>gt</b></font> <font color="#34a434"><b># Human-generated ground truth  </b></font>
 ┊  ┊   ┊   ┊
 │  │   └── <font color="#3465A4"><b>lm</b></font> <font color="#34a434"><b># light microscopy data </b></font>
