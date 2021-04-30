@@ -61,6 +61,7 @@ The following tree diagram illustrates how volumetric array data are organized w
 │  │   │   ├── <font color="#3465A4"><b>er_pred</b></font> <font color="#34a434"><b># endoplasmic reticulum raw predictions </b></font>
 │  │   │   ├── <font color="#3465A4"><b>er_seg</b></font> <font color="#34a434"><b># endoplasmic reticulum refined segmentations </b></font>
 │  │   │   ├── <font color="#3465A4"><b>gt</b></font> <font color="#34a434"><b># Human-generated ground truth  </b></font>
+│  │   │   ├── <font color="#34a434"><b># Also included are analysis such as organelle-organelle contact sites  </b></font>
 ┊  ┊   ┊   ┊
 │  │   └── <font color="#3465A4"><b>lm</b></font> <font color="#34a434"><b># light microscopy data </b></font>
 │  │      ├── <font color="#3465A4"><b>er_palm</b></font> <font color="#34a434"><b># PALM microscopy data of the endoplasmic reticulum </b></font>
