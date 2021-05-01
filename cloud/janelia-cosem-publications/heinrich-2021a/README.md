@@ -4,9 +4,9 @@
 
 This directory contains raw FIB-SEM data, foreground/background masks, hand-annotated ground-truth, predictions, refined segmentations, and analysis volumes used to generate the results described in [Heinrich et al., 2021](https://www.biorxiv.org/content/10.1101/2020.11.14.382143v1).
 
-### Organization of datasets
+### Organization of this directory
 
-For each dataset we provide some or all of the following sources of data, all of which should embed in the same physical coordinate space:
+For each dataset listed at the top level of this directory, we provide some or all of the following sources of data, all of which should embed in the same physical coordinate space:
 * FIB-SEM data: FIB-SEM volumes that have been aligned and minimally preprocessed.
 
 * Light microscopy (LM) data: For some datasets, samples were imaged with light microscopy prior to the acquisition of FIB-SEM images. These LM volumes typically contain multiple channels that each represent a fluorescently labelled organelle or subcellular structure. 
@@ -54,5 +54,74 @@ COSEM uses human-generated ground truth for training machine-learning models. Gr
 
 `s3://janelia-cosem-publications/heinrich-2021a/{dataset}/{dataset}.n5/volumes/groundtruth/0003/{crop_name}/labels/all`, where `{crop_name}` is something like `Crop1` (see an example crop directory [here](https://open.quiltdata.com/b/janelia-cosem-publications/tree/heinrich-2021a/jrc_hela-2/jrc_hela-2.n5/volumes/groundtruth/0003/)).  The name and quantities of the crops varies across datasets. We intend to add metadata to each crop that expresses the contents (i.e., the label classes) contained in that volume. 
 
+### Predictions, and refined segmentations,  analysis volumes
 
+Below is a table listing the prefixes denoting the different classes represented by volumes in `{dataset}.n5/labels`. For some classes that represent biological entities, e.g. `er` (endoplasmic reticulum) or `np` (nuclear pores), volumes with an additional suffix like `er_pred` and `er_seg` may exist, which represent the predictions and refined segmentations for that biological class. Other classes, represent the results of specific analyses, e.g. `er_mito_contacts`; for these classes, there is no suffix applied. 
+
+| class name | description  |
+| ---------- | -----------  |
+| cent | Centrosome |
+| cent-dapp | Centrosome Distal Appendage |
+| cent-sdapp | Centrosome Subdistal Appendage |
+| chrom | Chromatin |
+| er | Endoplasmic Reticulum |
+| er_palm | Light Microscopy (PALM) of ER |
+| er_sim | Light Microscopy (SIM) of the ER |
+| er-mem | Endoplasmic Reticulum membrane |
+| eres | Endoplasmic Reticulum Exit Sites |
+| eres-mem | Endoplasmic Reticulum Exit Site membrane |
+| endo | Endosomal Network |
+| endo-mem | Endosome membrane |
+| echrom | Euchromatin |
+| ecs | Extracellular Space |
+| golgi | Golgi |
+| golgi-mem | Golgi membrane |
+| hchrom | Heterochromatin |
+| ld | Lipid Droplet |
+| ld-mem | Lipid Droplet membrane |
+| lyso | Lysosome |
+| lyso-mem | Lysosome membrane |
+| mt | Microtubule |
+| mt-in | Microtubule inner |
+| mt-out | Microtubule outer |
+| mito | Mitochondria |
+| mito_palm | Light Microscopy (PALM) of Mitochondria |
+| mito_sim | Light Microscopy (SIM) of Mitochondria |
+| mito-mem | Mitochondria membrane |
+| mito-ribo | Mitochondria Ribosome |
+| ne | Nuclear Envelope |
+| ne-mem | Nuclear Envelope membrane |
+| np | Nuclear Pore |
+| np-in | Nuclear Pore inner |
+| np-out | Nuclear Pore outer |
+| nucleolus | Nucleoulus |
+| nechrom | Nucleoulus associated Euchromatin |
+| nhchrom | Nucleoulus associated Heterochromatin |
+| nucleus | Nucleus |
+| pm | Plasma Membrane |
+| ribo | Ribosome |
+| vesicle | Vesicle |
+| vesicle-mem | Vesicle membrane |
+| er_ribo_contacts | ER - Ribosome Contact Sites |
+| er_golgi_contacts | ER - Golgi Contact Sites |
+| er_mito_contacts | ER - Mito Contact Sites |
+| endo_er_contacts | Endosome - ER Contact Sites |
+| er_nucleus_contacts | ER - Nucleus Contact Sites |
+| er_pm_contacts | ER - Plasma Membrane Contat Sites |
+| er_vesicle_contacts | ER - Vesicle Contact Sites |
+| golgi_vesicle_contacts | Golgi - Vesicle Contact Sites |
+| endo_golgi_contacts | Endosome - Golgi Contact Sites |
+| mito_pm_contacts | Mito - Plasma Membrane Contact Sites |
+| er_mt_contacts | ER - Microtubule Contact Sites |
+| endo_mt_contacts | Endosome - Microtubule Contact Sites |
+| golgi_mt_contacts | Golgi - Microtubule Contact Sites |
+| mito_mt_contacts | Mitochondria - Microtubule Contact Sites |
+| mt_nucleus_contacts | Microtubule - Nucleus Contact Sites |
+| mt_vesicle_contacts | Microtubule - Vesicle Contact Sites |
+| mt_pm_contacts | Microtubule - Plasma Membrane Contact Sites |
+| mito_skeleton | Mitochrondria Skeletons |
+| mito_skeleton-lsp | Mitochrondria Skeletons: Longest Shortest Path |
+| er_medial-surface | ER Medial Surface |
+| er_curvature | Reconstructed ER from Medial Surface with Curvature |
+| ribo_classified | Ribosomes classified by contact surface |
  
