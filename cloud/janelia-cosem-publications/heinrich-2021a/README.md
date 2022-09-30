@@ -54,6 +54,46 @@ COSEM uses human-generated ground truth for training machine-learning models. Gr
 
 `s3://janelia-cosem-publications/heinrich-2021a/{dataset}/{dataset}.n5/volumes/groundtruth/0003/{crop_name}/labels/all`, where `{crop_name}` is something like `Crop1` (see an example crop directory [here](https://open.quiltdata.com/b/janelia-cosem-publications/tree/heinrich-2021a/jrc_hela-2/jrc_hela-2.n5/volumes/groundtruth/0003/)).  The name and quantities of the crops varies across datasets. We intend to add metadata to each crop that expresses the contents (i.e., the label classes) contained in that volume. 
 
+| Individual Class ID: | Combined Class ID:  |
+| -------------------- | ------------------  |
+| 1: ECS	| 1: ECS = 1  |
+| 2: PMe	| 2: PM = 2  |
+| 3: Mito mem	| 3: Mito mem = 3  |
+| 4: Mito lum	| 4: Mito = 3 + 4 + 5  |
+| 5: Mito Ribo	| 5: Mito Ribo = 5  |
+| 6: Golgi mem	| 6: Golgi mem = 6  |
+| 7: Golgi lum	| 7: Golgi = 6 + 7  |
+| 8: Vesicle mem	| 8: Vesicle mem = 8  |
+| 9: Vesicle lum	| 9: Vesicle = 8 + 9  |
+| 10: Endo mem	| 10: Endo mem = 10  |
+| 11: Endo lum	| 11: Endo = 10 + 11  |
+| 12: Lyso mem	| 12: Lyso mem = 12  |
+| 13: Lyso lum	| 13: Lyso = 12 + 13  |
+| 14: LD mem	| 14: LD mem = 14  |
+| 15: LD lum	| 15: LD = 14 + 15  |
+| 16: ER mem	| 16: ER mem = 16 + 18 + 20  |
+| 17: ER lum	| 17: ER = 16 + 17 + 18 + 19 + 20 + 21 + 22 + 23  |
+| 18: ERES mem	| (18: ERES mem = 18)  |
+| 19: ERES lum	| 19: ERES = 18 + 19  |
+| 20: NE mem	| (20: NE mem = 20 + 22 + 23)  |
+| 21: NE lum	| 21: NE = 20 + 21 + 22 + 23  |
+| 22: NP out	| 22: NP out = 22  |
+| 23: NP in	| 23: NP = 22 + 23  |
+| 24: H Chrom	| 24: Chromatin = 24 + 25 + 26 + 27 (+ 36)  |
+| 25: N-H Chrom	| 25: N-H Chrom = 25  |
+| 26: E Chrom	| 26: E Chrom = 26  |
+| 27: N-E Chrom	| 27: N-E Chrom = 27  |
+| 28: Nucleoplasm	| 28: Nucleus = 20 + 21 + 22 + 23 + 24 + 25 + 26 + 27 + 28 + 29 (+ 36)  |
+| 29: Nucleolus	| 29: Nucleolus = 29  |
+| 30: MT out	| 30: MT = 30 + 31 + 36  |
+| 31: Centrosome	| 31: Centrosome = 31 + 32 + 33  |
+| 32: Centrosome D App	| 32: Centrosome D App = 32  |
+| 33: Centrosome SD App	| 33: Centrosome SD App = 33  |
+| 34: Ribo	| 34: Ribo = 34  |
+| 35: Cytosol	| 
+| 36: MT in |	
+| 37: Nucleus combined	|
+
 ### Predictions, and refined segmentations,  analysis volumes
 
 Below is a table listing the prefixes denoting the different classes represented by volumes in `{dataset}.n5/labels`. For some classes that represent biological entities, e.g. `er` (endoplasmic reticulum) or `np` (nuclear pores), volumes with an additional suffix like `er_pred` and `er_seg` may exist, which represent the predictions and refined segmentations for that biological class. Other classes, represent the results of specific analyses, e.g. `er_mito_contacts`; for these classes, there is no suffix applied. 
